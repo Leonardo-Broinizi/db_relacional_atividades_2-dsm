@@ -1,0 +1,66 @@
+-- Exercícios Práticos da Aula 04: Manipulação de Dados no Projeto clima_alerta
+
+-- Para executar este script, você já deve ter o banco "clima_alerta" e todas as suas tabelas criadas.
+
+--------------------------------------------------------------------------------
+-- 1. COMANDO INSERT: Inserindo novos dados
+-- (Conceito apresentado nas páginas 6 a 8 do PDF)
+--------------------------------------------------------------------------------
+
+-- Inserindo um novo usuário no sistema.
+INSERT INTO usuario (nome, email, senha_hash) VALUES
+('Carlos Pereira', 'carlos.pereira@email.com', 'hash_senha_carlos');
+
+-- Inserindo um novo tipo de evento que não existia.
+INSERT INTO tipo_evento (nome, descricao) VALUES
+('Tempestade de Raios', 'Evento caracterizado por intensa atividade elétrica na atmosfera.');
+
+-- Supondo que o usuário 'Carlos Pereira' (ID 4) relatou um evento existente (ID 1).
+INSERT INTO relato (texto, data_hora, id_evento, id_usuario) VALUES
+('Vi a fumaça de longe, parece ser sério.', '2025-08-22 16:00:00', 1, 4);
+
+-- Verificando a inserção na tabela de relatos
+SELECT * FROM relato WHERE id_usuario = 4;
+
+
+--------------------------------------------------------------------------------
+-- 2. COMANDO UPDATE: Atualizando dados existentes
+-- (Conceito apresentado nas páginas 9 e 10 do PDF)
+--------------------------------------------------------------------------------
+
+-- O usuário 'João Silva' (ID 2) mudou de e-mail. Vamos atualizá-lo.
+-- A cláusula WHERE é FUNDAMENTAL para não alterar todos os registros da tabela.
+UPDATE usuario
+SET email = 'joao.silva.novo@email.com'
+WHERE id_usuario = 2;
+
+-- O status do evento 'Inundação no Centro do Rio' (ID 2) mudou para 'Resolvido'.
+UPDATE evento
+SET status = 'Resolvido'
+WHERE id_evento = 2;
+
+-- Verificando a atualização do status do evento
+SELECT titulo, status FROM evento WHERE id_evento = 2;
+
+
+--------------------------------------------------------------------------------
+-- 3. COMANDO DELETE: Removendo dados
+-- (Conceito apresentado na página 11 do PDF)
+--------------------------------------------------------------------------------
+
+-- Vamos supor que um alerta foi criado por engano e precisa ser removido.
+-- Primeiro, vamos inserir um alerta para poder deletá-lo.
+INSERT INTO alerta (mensagem, data_hora, nivel, id_evento) VALUES
+('ALERTA FALSO PARA REMOÇÃO', '2025-08-23 10:00:00', 'Baixo', 3);
+
+-- Agora, vamos remover o alerta específico que acabamos de criar.
+-- Usamos o ID do evento e a mensagem para ter certeza de que estamos apagando o registro correto.
+DELETE FROM alerta
+WHERE id_evento = 3 AND mensagem = 'ALERTA FALSO PARA REMOÇÃO';
+
+-- CUIDADO: Um comando DELETE sem a cláusula WHERE apagaria TODOS os registros da tabela.
+-- Exemplo perigoso (NÃO EXECUTE): DELETE FROM alerta;
+
+-- Verificando se o alerta foi removido (a consulta não deve retornar nada)
+SELECT * FROM alerta WHERE mensagem = 'ALERTA FALSO PARA REMOÇÃO';
+

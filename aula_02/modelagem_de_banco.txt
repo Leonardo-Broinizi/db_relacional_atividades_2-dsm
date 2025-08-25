@@ -1,0 +1,54 @@
+Exercicio Individual de Modelagem de Dados
+
+Conforme solicitado na pagina 17 do arquivo BDR-Aula02.pdf, aqui esta a listagem de 3 entidades, seus atributos e 3 relacionamentos para o projeto clima_alerta.
+
+1. Entidades e Atributos
+
+Entidade 1: Usuario
+Representa uma pessoa que utiliza o aplicativo para receber alertas ou enviar relatos.
+Chave Primaria: id_usuario
+Atributos:
+
+nome (Ex: "Maria Oliveira")
+
+email (Ex: "maria.oliveira@email.com")
+
+senha_hash (Ex: "hash_da_senha_criptografada")
+
+Entidade 2: Evento
+Representa um evento climatico ou ambiental que esta sendo monitorado.
+Chave Primaria: id_evento
+Atributos:
+
+titulo (Ex: "Queimada na Serra da Mantiqueira")
+
+status (Ex: "Ativo", "Resolvido")
+
+data_hora (Ex: "2025-08-22 14:30:00")
+
+Entidade 3: Relato
+Representa uma informacao enviada por um usuario sobre um determinado evento.
+Chave Primaria: id_relato
+Atributos:
+
+texto (Ex: "Muita fumaca visivel da rodovia!")
+
+data_hora (Ex: "2025-08-22 15:00:00")
+
+id_usuario (Chave Estrangeira que liga ao usuario que enviou)
+
+id_evento (Chave Estrangeira que liga ao evento relatado)
+
+2. Relacionamentos
+
+1. Usuario e Relato
+Descricao: Um Usuario pode fazer varios Relatos, mas cada Relato e feito por apenas um Usuario.
+Cardinalidade: 1 para N (1:N)
+
+2. Evento e Relato
+Descricao: Um Evento pode ter varios Relatos associados a ele, mas um Relato pertence a um unico Evento.
+Cardinalidade: 1 para N (1:N)
+
+3. Evento e Alerta
+Descricao: Um Evento pode gerar multiplos Alertas (de diferentes niveis ou em momentos distintos), mas cada Alerta esta associado a um unico Evento.
+Cardinalidade: 1 para N (1:N)
